@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LCA Industrial Solutions</title>
+    <link rel="icon" type="image/x-icon" href="./assets/landing-page.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(30, 30, 30, 0.95);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            transform: translateY(-100%);
+            animation: slideDown 0.5s ease forwards;
+        }
+
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .navbar .logo img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .navbar .logo-text {
+            color: #4CAF50;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .navbar ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .navbar ul li {
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .navbar ul li:nth-child(1) { animation-delay: 0.2s; }
+        .navbar ul li:nth-child(2) { animation-delay: 0.4s; }
+        .navbar ul li:nth-child(3) { animation-delay: 0.6s; }
+        .navbar ul li:nth-child(4) { animation-delay: 0.8s; }
+        .navbar ul li:nth-child(5) { animation-delay: 1s; }
+
+        .navbar ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+            font-size: 1.1rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #4CAF50;
+            transition: width 0.3s;
+        }
+
+        .navbar ul li a:hover::after {
+            width: 100%;
+        }
+
+        .navbar ul li a:hover {
+            color: #4CAF50;
+            transform: translateY(-2px);
+        }
+
+        .navbar ul li a.dashboard-link {
+            color: #4CAF50;
+        }
+
+        .navbar ul li a.dashboard-link:hover {
+            color: #45a049;
+        }
+
+        .navbar ul li a.dashboard-link::after {
+            background: #4CAF50;
+        }
+
+        .dashboard-icon {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s;
+        }
+
+        .navbar ul li a:hover .dashboard-icon {
+            transform: rotate(15deg);
+        }
+
+        @keyframes slideDown {
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .header {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+            z-index: -1;
+            transform: scale(1.1);
+            transition: transform 0.5s ease;
+        }
+
+        .header:hover .header-bg {
+            transform: scale(1);
+        }
+
+        .header h1 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 700;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1s ease forwards;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            font-weight: 300;
+            max-width: 900px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1s ease forwards 0.3s;
+        }
+
+        .services {
+            padding: 6rem 2rem;
+        }
+
+        .service-card {
+            background: #1e1e1e;
+            margin: 3rem auto;
+            padding: 2.5rem;
+            border-radius: 15px;
+            max-width: 1000px;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .service-card .service-image {
+            width: 300px;
+            height: 225px;
+            object-fit: cover;
+            border-radius: 12px;
+            opacity: 0.8;
+            transition: all 0.5s ease;
+        }
+
+        .service-card:hover .service-image {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .service-card .icon {
+            font-size: 3rem;
+            color: #4CAF50;
+        }
+
+        .service-card.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .service-card h2 {
+            color: #4CAF50;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+        }
+
+        .service-card p {
+            font-weight: 300;
+            font-size: clamp(1rem, 1.8vw, 1.2rem);
+            line-height: 1.6;
+        }
+
+        .service-content {
+            flex: 1;
+        }
+
+        .footer {
+            background: #1e1e1e;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .footer .company-info {
+            max-width: 800px;
+            margin: 0 auto 2.5rem auto;
+        }
+
+        .footer .company-info h3 {
+            font-weight: 600;
+            font-size: clamp(1.5rem, 2.5vw, 2rem);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer .company-info p {
+            font-weight: 300;
+            font-size: clamp(1rem, 1.8vw, 1.2rem);
+            line-height: 1.6;
+        }
+
+        .footer .contact {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 1.5rem;
+            font-weight: 400;
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .floating-shapes {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        .dashboard-section {
+            padding: 6rem 2rem;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .dashboard-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .dashboard-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            margin-top: 2rem;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .dashboard-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+            background: linear-gradient(45deg, #45a049, #4CAF50);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="./assets/web-development.png" alt="LCA Logo">
+            <span class="logo-text">LCA Industrial Solutions</span>
+        </div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="https://lcaforyou.com" class="dashboard-link">
+                
+                Launch Dashboard
+            </a></li>
+        </ul>
+    </nav>
+
+    <div class="floating-shapes">
+        <!-- Shapes will be added by JavaScript -->
+    </div>
+
+    <section class="header" id="home">
+        <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837" alt="Industrial Background" class="header-bg">
+        <h1>Revolutionizing Industry 4.0</h1>
+        <p>Empowering your industrial future with cutting-edge IoT, AI-driven automation, and smart manufacturing solutions</p>
+    </section>
+
+    <section class="services" id="services">
+        <div class="service-card">
+            <div class="service-content">
+                <h2>Next-Gen Industrial IoT Solutions</h2>
+                <p>Transform your factory floor into a smart manufacturing hub with our state-of-the-art IoT ecosystem. Experience real-time monitoring, predictive maintenance, and data-driven decision making that puts you ahead of the competition.</p>
+            </div>
+            <img src="https://images.unsplash.com/photo-1563770660941-20978e870e26" alt="IoT Solutions" class="service-image">
+        </div>
+
+        <div class="service-card">
+            <div class="service-content">
+                <h2>Intelligent Automation Systems</h2>
+                <p>Revolutionize your operations with our AI-powered automation solutions. From robotic process automation to smart manufacturing cells, we create systems that boost productivity, enhance precision, and drive operational excellence.</p>
+            </div>
+            <img src="https://images.unsplash.com/photo-1537151608828-ea2b11777ee8" alt="Automation Systems" class="service-image">
+        </div>
+
+        <div class="service-card">
+            <div class="service-content">
+                <h2>Bespoke Software Solutions</h2>
+                <p>Unlock your data's potential with our custom-built software platforms. We develop intuitive, powerful applications that transform complex industrial data into actionable insights, enabling smarter decision-making across your organization.</p>
+            </div>
+            <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb" alt="Software Development" class="service-image">
+        </div>
+
+        <div class="service-card">
+            <div class="service-content">
+                <h2>Advanced Analytics & AI</h2>
+                <p>Harness the power of artificial intelligence and machine learning to predict equipment failures, optimize production schedules, and uncover hidden opportunities for efficiency gains. Stay ahead with our cutting-edge predictive analytics.</p>
+            </div>
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71" alt="Machine Learning" class="service-image">
+        </div>
+    </section>
+
+    <section class="dashboard-section">
+        <div class="service-card">
+            <div class="service-content">
+                <h2>Cloud-Based Data Monitoring Dashboard</h2>
+                <p>Access your industrial data anytime, anywhere with our powerful cloud-based monitoring dashboard. Get real-time insights, customizable visualizations, and intelligent alerts to keep your operations running smoothly. Our secure platform ensures your data is protected while providing seamless accessibility across all devices.</p>
+                <a href="http://lcaforyou.com/" class="dashboard-button">Launch Dashboard</a>
+            </div>
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71" alt="Dashboard" class="service-image">
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="company-info">
+            <h3>LCA Industrial Solutions</h3>
+            <p>Leading the industrial revolution with innovative automation and IoT solutions. We empower businesses to achieve unprecedented levels of efficiency, productivity, and growth through intelligent technology integration.</p>
+        </div>
+        <div class="contact">
+            <p>Email: contact@lca.com</p>
+            <p>Phone: +1 (555) 123-4567</p>
+        </div>
+        <p>&copy; 2023 LCA Industrial Solutions. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Add floating shapes
+        const shapesContainer = document.querySelector('.floating-shapes');
+        for(let i = 0; i < 15; i++) {
+            const shape = document.createElement('div');
+            shape.classList.add('shape');
+            shape.style.width = Math.random() * 100 + 'px';
+            shape.style.height = shape.style.width;
+            shape.style.left = Math.random() * 100 + '%';
+            shape.style.top = Math.random() * 100 + '%';
+            shape.style.animationDelay = Math.random() * 5 + 's';
+            shapesContainer.appendChild(shape);
+        }
+
+        // Enhanced scroll animation for service cards and dashboard section
+        const cards = document.querySelectorAll('.service-card');
+        const dashboardSection = document.querySelector('.dashboard-section');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        });
+
+        cards.forEach(card => {
+            observer.observe(card);
+        });
+        observer.observe(dashboardSection);
+
+        // Add floating animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes float {
+                0% {
+                    transform: translate(0, 0) rotate(0deg);
+                }
+                25% {
+                    transform: translate(100px, 100px) rotate(90deg);
+                }
+                50% {
+                    transform: translate(0, 200px) rotate(180deg);
+                }
+                75% {
+                    transform: translate(-100px, 100px) rotate(270deg);
+                }
+                100% {
+                    transform: translate(0, 0) rotate(360deg);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
